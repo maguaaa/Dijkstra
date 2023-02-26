@@ -29,25 +29,17 @@ def markov_sampling(Pd, N_paths, N): #input a transition matrix and a number of 
         state = randrange(len(Pd)) #choose an initial state
         print(f"initial state = S{state+1}")
         for i in range(N):
-            print("--------------------------------------------------------")
-            print(f"current state is S{state+1}")
             next_state_list = Pd[state]
             while True:
                 next_state = randrange(len(next_state_list))
                 if next_state_list[next_state] != 0:
                     v += reward[state] * math.pow(rate, i+1) #discounted reward
-                    print(f"next state is S{next_state+1}")
-                    print(f"V += {reward[state]} * {rate}^{i+1}, state=S{state+1}")
                     state = next_state
                     break
                 else:
                     print(f"S{state+1} cannot reach S{next_state+1}")
-            print(f"v{i}={v}")
         v_paths.append(v)
-    print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-    print(v_paths)
     v_mean = mean(v_paths)
-    print(f"mean of discounted reward = {v_mean}")
 
     return v_mean
 
